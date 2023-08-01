@@ -1,0 +1,59 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: graylog
+  name: graylog-deployment
+  labels:
+    app: graylog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graylog
+  template:
+    metadata:
+      labels:
+        app: graylog
+    spec:
+      containers:
+        - name: graylog-pod
+          image: graylog/graylog:5.1.3
+          imagePullPolicy: Always
+          ports:
+            - name: web
+              containerPort: 9000
+
+            - name: beats
+              containerPort: 5044
+
+            - name: syslog
+              containerPort: 5140
+
+            - name: raw
+              containerPort: 5555
+
+            - name: gelf
+              containerPort: 12201
+
+            - name: forwarder1
+              containerPort: 13301
+
+            - name: forwarder2
+              containerPort: 13302
+          volumeMounts:
+            - name: graylog-storage
+              mountPath: "/usr/share/graylog/data"
+          envFrom:
+            - configMapRef:
+                name: graylog-configmap
+          resources:
+            requests:
+              memory: "1000Mi"
+              cpu: "1000m"
+            limits:
+              memory: "4000Mi"
+              cpu: "3000m"
+      volumes:
+        - name: graylog-storage
+          persistentVolumeClaim:
+            claimName: graylog-volume

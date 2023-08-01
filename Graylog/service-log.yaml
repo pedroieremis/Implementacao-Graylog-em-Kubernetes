@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: graylog-service-log
+  namespace: graylog
+spec:
+  type: NodePort
+  ports:
+    - name: syslogtcp
+      protocol: TCP
+      port: 5140
+      nodePort: 30197
+
+    - name: syslogudp
+      protocol: UDP
+      port: 5140
+      nodePort: 30197
+
+    # - name: beats
+    #   protocol: TCP
+    #   port: 5044
+
+    # - name: rawtcp
+    #   protocol: TCP
+    #   port: 5555
+
+    # - name: rawudp
+    #   protocol: UDP
+    #   port: 5555
+
+    # - name: gelftcp
+    #   protocol: TCP
+    #   port: 12201
+
+    # - name: gelfudp
+    #   protocol: UDP
+    #   port: 12201
+
+    # - name: forwarderdata
+    #   protocol: TCP
+    #   port: 13301
+
+    # - name: forwarderconfig
+    #   protocol: TCP
+    #   port: 13302
+  selector:
+    app: graylog

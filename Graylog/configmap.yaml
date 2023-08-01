@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: graylog-configmap
+  namespace: graylog
+data:
+  GRAYLOG_ROOT_TIMEZONE: "America/Sao_Paulo"
+  GRAYLOG_PASSWORD_SECRET: senha1
+  GRAYLOG_ROOT_PASSWORD_SHA2: senha2
+  GRAYLOG_HTTP_BIND_ADDRESS: "0.0.0.0:9000"
+  GRAYLOG_HTTP_EXTERNAL_URI: "http://localhost:9000/"
+  GRAYLOG_ELASTICSEARCH_HOSTS: "http://opensearch.externo.com:9200"
+  GRAYLOG_MONGODB_URI: "mongodb://mongodb-service:27017/graylog"
